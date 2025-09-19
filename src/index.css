@@ -1,0 +1,211 @@
+/* ==========================================
+  IMPROVED COLOR PALETTE & STYLES
+  ==========================================
+  Key Changes:
+  1. Backgrounds: Swapped pure black for a deep, cool-toned charcoal/navy to reduce eye strain.
+  2. Text: Replaced pure white with a softer off-white for better readability.
+  3. Accent Color: Introduced a more vibrant, modern blue to make interactive elements pop.
+  4. Borders/Hovers: Used translucent accent colors to create a subtle "glow" effect.
+  5. Feedback: Added a dedicated --color-error for clearer feedback on incorrect answers.
+*/
+
+:root {
+  /* --- Dark Mode Palette (REVISED) --- */
+  --color-bg: #111827;          /* Deep, cool-toned background */
+  --color-card: #1f2937;         /* Lighter surface for cards */
+  --color-text: #f9fafb;         /* Soft off-white for main text */
+  --color-muted: #e5e7eb;        /* Muted gray for secondary text - EVEN BRIGHTER for clarity */
+  --color-primary: #60a5fa;      /* Vibrant, modern blue accent */
+  --color-success: #4ade80;      /* Bright, clear green for success */
+  --color-error: #f87171;        /* Clear red for errors/wrong answers */
+  --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.45); /* ADDED: Softer, more modern shadow */
+}
+
+[data-theme="light"] {
+  /* --- Light Mode Palette (Adjusted for cohesion) --- */
+  --color-bg: #f7fafc;
+  --color-card: #ffffff;
+  --color-text: #0b1220;
+  --color-muted: #4b5563;
+  --color-primary: #3b82f6;      /* A slightly deeper blue for light mode contrast */
+  --color-success: #16a34a;
+  --color-error: #ef4444;
+  --shadow-lg: 0 25px 50px -12px rgba(17, 24, 39, 0.1); /* ADDED: Softer light-mode equivalent */
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  /* UPDATED: Dynamic gradients using the new primary color variable */
+  background: radial-gradient(1200px 800px at 10% 10%, var(--color-primary), transparent 70%),
+              radial-gradient(1000px 600px at 90% 20%, var(--color-primary), transparent 75%),
+              var(--color-bg);
+  background-attachment: fixed; /* Keeps the gradient fixed during scroll */
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent), var(--color-card);
+  backdrop-filter: saturate(140%) blur(12px);
+  /* UPDATED: Border uses the accent color for a subtle glow */
+  border: 1px solid rgba(96, 165, 250, 0.15); 
+  border-radius: 16px;
+  /* ADDED: A second shadow layer for a premium colored "glow" effect */
+  box-shadow: var(--shadow-lg), 0 0 35px -15px rgba(96, 165, 250, 0.25);
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .2s ease;
+  cursor: pointer;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-primary { 
+  background: var(--color-primary); 
+  color: #ffffff; 
+  /* UPDATED: Shadow uses the primary color for a colored glow */
+  box-shadow: 0 8px 20px -6px var(--color-primary); 
+}
+.btn-primary:hover {
+  filter: brightness(1.1);
+}
+.btn-ghost { 
+  background: transparent; 
+  color: var(--color-text); 
+  /* UPDATED: Using a more visible, glowing border */
+  border: 1px solid rgba(96, 165, 250, 0.25); 
+}
+.btn-ghost:hover { 
+  background: rgba(96, 165, 250, 0.1); 
+  border-color: rgba(96, 165, 250, 0.4);
+}
+.btn:focus-visible { 
+  outline: 2px solid var(--color-primary); 
+  outline-offset: 2px; 
+}
+
+/* Grid styles remain the same */
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+
+
+.title {
+  font-size: 32px;
+  line-height: 1.15;
+  margin: 8px 0 12px;
+  font-weight: 700;
+}
+.subtitle { color: var(--color-muted); margin: 0 0 24px; }
+
+.option {
+  padding: 16px;
+  font-size: 1.1rem;
+  /* ADDED: Ensure option text is bright and clear */
+  color: var(--color-text);
+  font-weight: 600;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  /* UPDATED: Glowing border style */
+  border: 1px solid rgba(96, 165, 250, 0.2); 
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .2s ease, transform .12s ease, border-color .2s ease;
+}
+.option:hover { 
+  background: rgba(96, 165, 250, 0.1);
+  border-color: rgba(96, 165, 250, 0.5);
+  transform: translateY(-2px);
+}
+.option:focus-visible { outline: 2px solid var(--color-primary); }
+/* UPDATED: Clearer styles for correct/wrong answers */
+.option.selected {
+  background: rgba(96, 165, 250, 0.2);
+  border-color: var(--color-primary);
+}
+.option.correct {
+  border-color: var(--color-success);
+  background: rgba(74, 222, 128, 0.15);
+}
+.option.wrong {
+  border-color: var(--color-error);
+  background: rgba(248, 113, 113, 0.15);
+}
+.option.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+
+.hud { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--color-card);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.progress {
+  height: 10px;
+  background: rgba(96, 165, 250, 0.1);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-success));
+  transition: width 0.4s ease-in-out;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-card);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+.theme-toggle:focus-visible { outline: 2px solid var(--color-primary); }
+
+a { color: var(--color-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.badge {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.15);
+  color: var(--color-primary);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  font-weight: 600;
+}
+
+
